@@ -19,56 +19,61 @@ public class Main {
         int[][] countArr = new int[n - 7][m - 7];
         for (int i = 0; i < n - 7; i++) {
             for (int j = 0; j < m - 7; j++) {
-                String[] color = {"W", "B"};
-                int[] colorCount = new int[2];
-                for (int z = 0; z < 2; z++) {
-                    String[][] colors = copyStringArray(inputColors);
-                    if (!color[z].equals(colors[i][j])) {
-                        colors[i][j] = color[z];
-                        colorCount[z]++;
-                    }
-                    for (int k = i; k < i + 8; k++) {
-                        for (int l = j + 1; l < j + 8; l++) {
-                            if (colors[k][l - 1].equals(colors[k][l])) {
-                                if(colors[k][l].equals("W")) {
-                                    colors[k][l] = "B";
-                                } else {
-                                    colors[k][l] = "W";
-                                }
-                                colorCount[z]++;
-                            }
-                        }
-                        if (k != i + 7 && colors[k][j].equals(colors[k + 1][j])) {
-                            if(colors[k + 1][j].equals("W")) {
-                                colors[k + 1][j] = "B";
-                            } else {
-                                colors[k + 1][j] = "W";
-                            }
-                            colorCount[z]++;
-                        }
-                    }
-                }
-                countArr[i][j] = Math.min(colorCount[0], colorCount[1]);
+                String[][] copyArr = copyColors(inputColors, i, j);
+                countArr[i][j] = countColors(copyArr);
             }
         }
-        int min = countArr[0][0];
-        for (int[] intRow : countArr) {
-            for (int num : intRow) {
-                if (num < min) {
-                    min = num;
+
+        int answer = countArr[0][0];
+        for (int i = 0; i < countArr.length; i++) {
+            for (int j = 0; j < countArr[i].length; j++) {
+                if (countArr[i][j] < answer) {
+                    answer = countArr[i][j];
                 }
             }
         }
-        System.out.println(min);
+
+        System.out.println(answer);
     }
 
-    private static String[][] copyStringArray(String[][] strArr) {
-        String[][] strArr2 = new String[strArr.length][strArr[0].length];
-        for (int i = 0; i < strArr.length; i++) {
-            for (int j = 0; j < strArr[i].length; j++) {
-                strArr2[i][j] = strArr[i][j];
+    static int countColors(String[][] colors) {
+        int countB = 0;
+        int countW = 0;
+        String[] manualColorsB = new String[colors.length];
+        String[] manualColorsW = new String[colors.length];
+        for (int i = 0; i < colors.length; i++) {
+            manualColorsB[i] = i % 2 == 0 ? "B" : "W";
+            manualColorsW[i] = i % 2 == 0 ? "W" : "B";
+        }
+        for (int i = 0; i < colors.length; i++) {
+            for (int j = 0; j < colors[i].length; j++) {
+                if (i % 2 == 0 && !manualColorsB[j].equals(colors[i][j])) {
+                    countB++;
+                } else if (i % 2 != 0 && !manualColorsW[j].equals(colors[i][j])) {
+                    countB++;
+                }
             }
         }
-        return strArr2;
+        for (int i = 0; i < colors.length; i++) {
+            for (int j = 0; j < colors[i].length; j++) {
+                if (i % 2 == 0 && !manualColorsW[j].equals(colors[i][j])) {
+                    countW++;
+                } else if (i % 2 != 0 && !manualColorsB[j].equals(colors[i][j])) {
+                    countW++;
+                }
+            }
+        }
+
+        return Math.min(countB, countW);
+    }
+
+    static String[][] copyColors(String[][] colors, int x, int y) {
+        String[][] copy = new String[8][8];
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                copy[i][j] = colors[x + i][y + j];
+            }
+        }
+        return copy;
     }
 }
