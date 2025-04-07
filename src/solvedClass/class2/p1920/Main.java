@@ -16,7 +16,7 @@ public class Main {
         for (int i = 0; i < n; i++) {
             nums[i] = Integer.parseInt(inputs[i]);
         }
-        nums = Arrays.stream(nums).sorted().toArray();
+        Arrays.sort(nums);
 
         int m = Integer.parseInt(br.readLine());
         String[] inputs2 = br.readLine().split(" ");
