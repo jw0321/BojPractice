@@ -1,4 +1,4 @@
-package solvedClass.class2.p11650;
+package solvedClass.class2.p11651;
 
 import java.io.*;
 import java.util.*;
@@ -33,10 +33,10 @@ public class Main {
         }
 
         Arrays.sort(coordinates, (o1, o2) -> {
-            if (o1.x != o2.x) {
-                return o1.x - o2.x;
-            } else {
+            if (o1.y != o2.y) {
                 return o1.y - o2.y;
+            } else {
+                return o1.x - o2.x;
             }
         });
         for (Coordinate coordinate : coordinates) {
