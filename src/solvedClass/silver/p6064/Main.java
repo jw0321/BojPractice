@@ -1,4 +1,4 @@
-package solvedClass.class3.p6064;
+package solvedClass.silver.p6064;
 
 import java.io.*;
 

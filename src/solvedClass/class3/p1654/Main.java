@@ -1,4 +1,4 @@
-package solvedClass.class2.p1654;
+package solvedClass.class3.p1654;
 
 import java.io.*;
 import java.util.*;
